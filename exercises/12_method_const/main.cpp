@@ -5,7 +5,8 @@
 struct Fibonacci {
     int numbers[11];
     // TODO: 修改方法签名和实现，使测试通过
-    int get(int i) {
+    int get(int i) const {//这个关键字表示该成员函数不会修改对象的状态，也就是说，它不能修改类的成员变量。这样做的好处是可以保证对象的不可变性，提高代码的安全性和可读性。
+        return numbers[i];
     }
 };
 
