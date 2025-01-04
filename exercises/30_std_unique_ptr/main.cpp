@@ -46,20 +46,27 @@ int main(int argc, char **argv) {
 
     drop(drop(reset(drop(reset(reset(nullptr))))));
     problems[2] = std::move(RECORDS);
+    // for(int i=0;i<3;i++){
+    //     for(int j=0;j<problems[i].size();j++){
+    //         std::cout<<problems[i][j]<<" ";
+    //     }
+    //     std::cout<<std::endl;
+    // }
 
     // ---- 不要修改以上代码 ----
 
-    std::vector<const char *> answers[]{
+    std::vector<const char *> answers[3]{
         {"fd"},
         // TODO: 分析 problems[1] 中资源的生命周期，将记录填入 `std::vector`
         // NOTICE: 此题结果依赖对象析构逻辑，平台相关，提交时以 CI 实际运行平台为准
-        {"", "", "", "", "", "", "", ""},
-        {"", "", "", "", "", "", "", ""},
+        {"d","ffr"},
+        {"d", "d","r"},
     };
 
     // ---- 不要修改以下代码 ----
 
     for (auto i = 0; i < 3; ++i) {
+        
         ASSERT(problems[i].size() == answers[i].size(), "wrong size");
         for (auto j = 0; j < problems[i].size(); ++j) {
             ASSERT(std::strcmp(problems[i][j].c_str(), answers[i][j]) == 0, "wrong location");
