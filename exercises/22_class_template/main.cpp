@@ -1,5 +1,5 @@
 ﻿#include "../exercise.h"
-
+#include <cstring>
 // READ: 类模板 <https://zh.cppreference.com/w/cpp/language/class_template>
 
 template<class T>
@@ -32,9 +32,32 @@ struct Tensor4D {
     // 则 `this` 与 `others` 相加时，3 个形状为 `[1, 2, 1, 4]` 的子张量各自与 `others` 对应项相加。
     Tensor4D &operator+=(Tensor4D const &others) {
         // TODO: 实现单向广播的加法
-        
-        unsigned int size = 1;
-
+        //预先存储每个阶是否需要广播
+        bool broadcast[4];
+        for (int i = 0; i < 4; i++) {
+            if(broadcast[i] = shape[i] != others.shape[i]){//如果不相等，需要广播
+                ASSERT(others.shape[i] == 1, "Invalid shape");//广播的维度长度必须为 1
+            }
+        }
+        auto dst = this->data;//要加到的元素地址
+        auto src = others.data;//要加上的元素地址
+        T* marks[4]{src};//4个阶的锚点
+        for(auto i0=0u;i0<shape[0];i0++){
+           if(broadcast[0])src=marks[0];//如果这个阶段是需要广播的，回到锚点位置
+           marks[1]=src;//更新锚点
+           for(auto i1=0u;i1<shape[1];++i1){
+                if(broadcast[1])src=marks[1];
+                marks[2]=src;
+                for(auto i2=0u;i2<shape[2];++i2){
+                    if(broadcast[2])src=marks[2];
+                    marks[3]=src;
+                    for(auto i3=0u;i3<shape[3];++i3){
+                        if(broadcast[3])src=marks[3];
+                        *dst++ += *src++;
+                    }
+                }
+           }
+        }
         return *this;
     }
 };
